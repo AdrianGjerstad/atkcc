@@ -9,6 +9,8 @@ namespace atk {
 
 class buffer {
 public:
+  buffer() {}
+
   buffer(const std::size_t& buffer_size) {
     samples_.resize(buffer_size, 0);
   }
@@ -70,22 +72,20 @@ public:
   pipe() {}
 
   pipe(const std::vector<buffer>& buffers) {
-    buffers_ = buffers.buffers_;
+    buffers_ = buffers;
   }
 
   pipe(const std::vector<double>& buf) {
     buffers_ = { buffer(buf) };
   }
 
-  pipe(const std::vector<const std::vector<double>>& buffers) {
-    buffers_.resize(buffers.size());
-
+  pipe(const std::vector<std::vector<double>>& buffers) {
     for(std::size_t i = 0; i < buffers.size(); ++i) {
       buffers_.push_back(buffer(buffers[i]));
     }
   }
 
-  const std::size_t& width() const {
+  const std::size_t width() const {
     return buffers_.size();
   }
 
@@ -105,7 +105,7 @@ public:
     return buffers_[index];
   }
 
-  const std::size_t& size() const {
+  const std::size_t size() const {
     if(buffers_.size() > 0) return buffers_[0].size();
     return 0;
   }
