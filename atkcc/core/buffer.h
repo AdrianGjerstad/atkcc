@@ -65,6 +65,54 @@ private:
   std::vector<double> samples_;
 };
 
+class pipe {
+public:
+  pipe() {}
+
+  pipe(const std::vector<buffer>& buffers) {
+    buffers_ = buffers.buffers_;
+  }
+
+  pipe(const std::vector<double>& buf) {
+    buffers_ = { buffer(buf) };
+  }
+
+  pipe(const std::vector<const std::vector<double>>& buffers) {
+    buffers_.resize(buffers.size());
+
+    for(std::size_t i = 0; i < buffers.size(); ++i) {
+      buffers_.push_back(buffer(buffers[i]));
+    }
+  }
+
+  const std::size_t& width() const {
+    return buffers_.size();
+  }
+
+  buffer& channel(const std::size_t& index) {
+    return buffers_[index];
+  }
+
+  const buffer& channel(const std::size_t& index) const {
+    return buffers_[index];
+  }
+
+  buffer& operator[](const std::size_t& index) {
+    return buffers_[index];
+  }
+
+  const buffer& operator[](const std::size_t& index) const {
+    return buffers_[index];
+  }
+
+  const std::size_t& size() const {
+    if(buffers_.size() > 0) return buffers_[0].size();
+    return 0;
+  }
+private:
+  std::vector<buffer> buffers_;
+};
+
 } // namespace atk
 
 #endif  // ATKCC_INCLUDE_CORE_BUFFER_H_
