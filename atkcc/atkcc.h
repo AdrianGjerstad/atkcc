@@ -11,6 +11,7 @@
 #endif
 
 // Include ALL library files below
+#include "core/buffer.h"
 
 #endif  // ATKCC_INCLUDE_ATKCC_H_
 
